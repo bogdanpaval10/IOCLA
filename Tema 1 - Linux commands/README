@@ -1,0 +1,66 @@
+	Programul reprezinta implementarea unui sistem de fisiere si directoare,
+fiind o varianta asemanatoare cu cea din linux. Se citesc de la stdin
+urmatoarele comenzi: touch, mkdir, ls, rm, rmdir, cd, tree, pwd, mv si stop.
+In functia main se aloca memorie pentru "home" si pentru numele acestuia, apoi
+se citeste linia comenzii si se verifica ce tip de comanda este pentru a apela
+functia potrivita.
+
+Functia touch:
+	- verifica daca exista deja un fisier/director cu acel nume, iar in cazul
+	in care exista, se afiseaza un mesaj si se iese din functie;
+	- se parcurge lista de fisiere, iar dupa ultimul fisier existent se aloca
+    memorie si se adauga noul fisier;
+Functia mkdir:
+	- verifica daca exista deja un fisier/director cu acel nume, iar in cazul
+	in care exista, se afiseaza un mesaj si se iese din functie;
+	- se parcurge lista de directoare, iar dupa ultimul fisier existent
+	se aloca memorie si se adauga noul director;
+Functia ls:
+	- se parcurge lista de directoare din directorul dat ca parametru si
+	se afiseaza numele acestora;
+	- se parcurge lista de fisiere din directorul dat ca parametru si
+	se afiseaza numele acestora;
+Functia rm:
+	- se verifica daca exista deja un fisier cu numele dat, iar in cazul
+	in care nu exista, se afiseaza un mesaj;
+	- daca numele a fost gasit, se cauta pozitia acestuia, se sterge din lista
+	si se dezaloca memoria;
+Functia rmdir:
+	- se verifica daca exista deja un director cu numele dat, iar in cazul
+	in care nu exista, se afiseaza un mesaj;
+	- daca numele a fost gasit, se cauta pozitia acestuia, se apeleaza functia
+	free_dir care sterge si dezaloca memoria unui director din lista, inclusiv
+	copiii lui;
+Functia cd:
+	- verifica tipul comenzii (cd .. sau cd nume_director);
+	- cauta pozitia directorului de inlocuit, iar daca nu exista se afiseaza
+	un mesaj;
+	- daca a fost gasit, prin acelasi parametru primit in functie (target)
+	se modifica directorul curent;
+Functia tree:
+	- functia este recursiva pentru a usura incrementarea variabilei level;
+	- se parcurge fiecare director si se afiseaza ce este in interior, intai
+    numele directoarelor, apoi numele fisierelor;
+Functia pwd:
+	- se incepe de la directorul curent primit ca parametru si se merge pana la
+    directorul "home";
+	- se parcurge ierarhia de directoare in sens invers (de la dreapta la
+	stanga), se copiaza la fiecare pas calea veche, se adauga la inceput
+	numele directorului curent si vechea cale;
+Functia stop:
+	- opreste executia programului;
+Functia mv:
+	- se verifica daca exista deja un fisier/director cu numele vechi sau nou,
+    iar in cazul in care exista, se afiseaza un mesaj si se iese din functie;
+	- se creeaza fisierul/directorul cu noul nume si se cauta pozitia
+	fisierului/directorului ce trebuie modificat, folosind touch/mkdir;
+	- se creeaza fisierele (si directoarele) din vechiul fisier/director in
+    noul fisier/director, apoi se apeleaza functia rm/rmdir pentru a sterge
+    fisierul/directorul din lista si dezaloca memoria;
+Functia free_dir:
+	- elibereaza memoria directorului primit ca parametru, inclusiv
+    a fisierelor din interior;
+Functia free_all:
+	- porneste recursiv din "home" si apeleaza functia free_dir pentru fiecare
+	director.
+	

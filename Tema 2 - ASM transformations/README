@@ -1,0 +1,35 @@
+// Paval Bogdan-Costin, 322CA
+
+Functia rotp:
+	- se reseteaza eax, ce urmeaza sa fie incrementat de len ori;
+	- se muta in bl caracterul de la plaintext[eax] si in bh caracterul de la key[ecx];
+	- se face xor intre cele doua caractere si se adauga la chipertext[eax];
+	- se incrementeaza eax si se sare la eticheta next daca ecx != 0;
+
+Functia ages:
+	- se reseteaza eax, ce urmeaza sa fie incrementat de len ori pentru a parcurge vectorul dates;
+	- se muta in bh ziua prezenta, in bl luna prezenta si in ecx anul prezent;
+	- se compara ziua nasterii de la pasul eax (aflat la pozitia 8 * eax + my_date.day) cu ziua
+    prezenta (bh); daca este mai mica, se sare la eticheta lower_day, altfel se decrementeaza luna
+    prezenta (bl) si se merge in continuare;
+	- la lower_day se compara luna nasterii de la pasul eax (la pozitia 8 * eax + my_date.month)
+    cu luna prezenta (bl); daca este mai mica, se sare la eticheta calculate_age, altfel 
+    se decrementeaza anul prezent (ecx) si se merge in continuare;
+	- la calculate_age se scade, din anul prezent, anul nasterii de la pasul eax (aflat la pozitia
+    8 * eax + my_date.year), adica eax -= an_nastere; daca diferenta este pozitiva, se sare 
+    la eticheta add_age, altfel ecx devine 0 si se merge in continuare;
+	- la add_age se muta valoarea varstei din eax in edx si se restabileste in ecx all_ages si
+	se muta valoarea varstei (edx) la all_ages[eax];
+	- se incrementeaza eax si daca este mai mic decat len, se merge la eticheta iterate_vector, 
+    fiind pasul urmator;
+
+Functia columnar_transposition:
+	- se reseteaza eax (pentru a parcurge ciphertext), ecx (pentru a parcurge key) si 
+    edx (pentru a parcurge haystack);
+	- la iterate_key se parcurge vectorul key;
+	- la iterate_haystack se pune pe stiva valoarea lui edx si se verifica 
+    daca (edx * len_cheie + ecx > len_haystack) atunci se sare la eticheta continue, altfel se muta
+    la dh caracterul de la haystack[key[ecx] + edx * len_cheie] si se adauga la ciphertext[eax];
+    se restaureaza esi si se verifica daca (edx * len_cheie < len_haystack) atunci se sare la
+	eticheta iterate_haystack pentru urmatoarea iteratie, altfel se merge in continuare si verifica
+    daca (ecx < len_cheie) se sare la eticheta iterate_key, altfel se termina.
